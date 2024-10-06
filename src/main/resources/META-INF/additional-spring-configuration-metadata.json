@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "app.values.api.giga-chat.base-url.auth",
+      "type": "java.lang.String",
+      "description": "Description for app.values.api.giga-chat.base-url.auth."
+    },
+    {
+      "name": "app.values.api.giga-chat.base-url.chat",
+      "type": "java.lang.String",
+      "description": "Description for app.values.api.giga-chat.base-url.chat."
+    },
+    {
+      "name": "app.values.api.giga-chat.chat-settings.scope",
+      "type": "java.lang.String",
+      "description": "Description for app.values.api.giga-chat.chat-settings.scope."
+    },
+    {
+      "name": "app.values.api.giga-chat.chat-settings.RqUID",
+      "type": "java.lang.String",
+      "description": "Description for app.values.api.giga-chat.chat-settings.RqUID."
+    },
+    {
+      "name": "app.values.api.giga-chat.auth-key",
+      "type": "java.lang.String",
+      "description": "Description for app.values.api.giga-chat.auth-key."
+    }
+  ]
+}
