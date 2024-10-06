@@ -7,7 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.derendyaev.mospolytech.gigaChat.models.GigaToken;
+import ru.derendyaev.mospolytech.exceptions.TokenException;
+import ru.derendyaev.mospolytech.gigaChat.models.auth.GigaToken;
+import ru.derendyaev.mospolytech.gigaChat.models.message.GigaMessageRequest;
+import ru.derendyaev.mospolytech.gigaChat.models.message.GigaMessageResponse;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -38,7 +41,7 @@ public class Client {
 
     public GigaToken getToken() {
         HttpHeaders tokenHeaders = new HttpHeaders();
-        tokenHeaders.put("RqUID", Collections.singletonList(getRqUID()));
+        tokenHeaders.put("RqUID", Collections.singletonList(getUUID()));
         tokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         tokenHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         tokenHeaders.set("Authorization", "Basic " + authKey);
@@ -53,10 +56,33 @@ public class Client {
                 .block();
     }
 
-    private String getRqUID() {
+    public GigaMessageResponse gigaMessageGenerate(String context, String userRequest, String token) {
+        checkToken(token);
+        HttpHeaders messageHeaders = new HttpHeaders();
+        messageHeaders.setContentType(MediaType.APPLICATION_JSON);
+        messageHeaders.put("X-Request-ID", Collections.singletonList(getUUID()));
+        messageHeaders.put("X-Session-ID", Collections.singletonList(getUUID()));
+        messageHeaders.put("X-Client-ID", Collections.singletonList(getUUID()));
+        messageHeaders.setBearerAuth(getToken().getAccessToken());
+
+        return this.webClientChat
+                .post()
+                .uri("/api/v1/chat/completions")
+                .headers(httpHeaders -> httpHeaders.addAll(messageHeaders))
+                .bodyValue(new GigaMessageRequest())
+                .retrieve()
+                .bodyToMono(GigaMessageResponse.class).block();
+    }
+
+    private String getUUID() {
         return UUID.randomUUID().toString();
     }
 
+    private void checkToken(String token) {
+        if (token == null) {
+            throw new TokenException("Expired token!");
+        }
+    }
 
 
 }
