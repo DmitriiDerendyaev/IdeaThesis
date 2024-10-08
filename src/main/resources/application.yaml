@@ -8,6 +8,8 @@ app:
         chat-settings:
           scope: "GIGACHAT_API_PERS"
         auth-key: "ZjBjZmU2Y2EtMTUwYi00ZWIzLWE3MzEtOGE2OGRkNjljYzNkOjU0ZDIzOTM1LTlmMDMtNDg0Ni1iNmEyLTQxZTc2NGRhYTA3OA=="
+    bot:
+      token: "6337075396:AAHdA3BJUlTRemUY1UVodYs_eYr-5L4m5OE"
 
 
 

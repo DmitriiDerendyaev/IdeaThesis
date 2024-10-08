@@ -24,6 +24,11 @@
       "name": "app.values.api.giga-chat.auth-key",
       "type": "java.lang.String",
       "description": "Description for app.values.api.giga-chat.auth-key."
+    },
+    {
+      "name": "app.values.bot.token",
+      "type": "java.lang.String",
+      "description": "Description for app.values.bot.token."
     }
   ]
 }
