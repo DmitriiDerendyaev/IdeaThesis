@@ -4,16 +4,22 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.derendyaev.mospolytech.exceptions.TokenException;
 import ru.derendyaev.mospolytech.gigaChat.models.auth.GigaToken;
 import ru.derendyaev.mospolytech.gigaChat.models.message.GigaMessageRequest;
 import ru.derendyaev.mospolytech.gigaChat.models.message.GigaMessageResponse;
+import ru.derendyaev.mospolytech.gigaChat.models.message.Message;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
+
+import static ru.derendyaev.mospolytech.gigaChat.models.GigaChatConstant.*;
 
 @Service
 public class Client {
@@ -56,8 +62,8 @@ public class Client {
                 .block();
     }
 
-    public GigaMessageResponse gigaMessageGenerate(String context, String userRequest, String token) {
-        checkToken(token);
+    public GigaMessageResponse gigaMessageGenerate(String context, String userRequest, @Nullable String token) {
+//        checkToken(token);
         HttpHeaders messageHeaders = new HttpHeaders();
         messageHeaders.setContentType(MediaType.APPLICATION_JSON);
         messageHeaders.put("X-Request-ID", Collections.singletonList(getUUID()));
@@ -69,7 +75,13 @@ public class Client {
                 .post()
                 .uri("/api/v1/chat/completions")
                 .headers(httpHeaders -> httpHeaders.addAll(messageHeaders))
-                .bodyValue(new GigaMessageRequest())
+                .bodyValue(new GigaMessageRequest(
+                        GIGA_CHAT_MODEL,
+                        false,
+                        0,
+                        List.of(new Message(SYSTEM_ROLE, context),
+                                new Message(USER_ROLE, userRequest))
+                        ))
                 .retrieve()
                 .bodyToMono(GigaMessageResponse.class).block();
     }

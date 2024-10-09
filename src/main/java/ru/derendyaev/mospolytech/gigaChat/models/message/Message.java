@@ -7,8 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Message {
+
+    public Message(String role, String content) {
+        this.role = role;
+        this.content = content;
+    }
 
     @JsonProperty("role")
     private String role; // роль отправителя (system, user, assistant)
