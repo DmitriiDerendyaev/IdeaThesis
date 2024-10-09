@@ -24,13 +24,6 @@ public class IdeaThesisApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		// Вызываем метод getToken() и распечатываем токен
-
-		GigaMessageResponse gigaMessageResponse = client.gigaMessageGenerate(
-				new SystemRolePrompt().getRolePrompt(),
-				new UserRolePrompt("расшифрока анализов, Сбор анамнеза, физикальное обсдедование", "Эндокринология").getRolePrompt(), null);
-
-		System.out.println(gigaMessageResponse.toString());
-
+		System.out.println("Приложентие запущено");
 	}
 }

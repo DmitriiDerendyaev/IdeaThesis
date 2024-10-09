@@ -27,4 +27,8 @@ public class GigaMessageResponse {
     @JsonProperty("usage")
     private Usage usage; // информация о токенах
 
+    @Override
+    public String toString() {
+        return choices.get(0).getMessage().getContent();
+    }
 }
