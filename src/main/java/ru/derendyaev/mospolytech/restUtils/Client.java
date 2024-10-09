@@ -1,6 +1,7 @@
 package ru.derendyaev.mospolytech.restUtils;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 import static ru.derendyaev.mospolytech.gigaChat.models.GigaChatConstant.*;
 
+@Slf4j
 @Service
 public class Client {
 
@@ -46,6 +48,7 @@ public class Client {
     }
 
     public GigaToken getToken() {
+        log.info("Создан новый токен!");
         HttpHeaders tokenHeaders = new HttpHeaders();
         tokenHeaders.put("RqUID", Collections.singletonList(getUUID()));
         tokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -70,6 +73,8 @@ public class Client {
         messageHeaders.put("X-Session-ID", Collections.singletonList(getUUID()));
         messageHeaders.put("X-Client-ID", Collections.singletonList(getUUID()));
         messageHeaders.setBearerAuth(getToken().getAccessToken());
+
+        log.info("Создан запрос в GigaChat c контекстом: {} и тематикой: {}", context, userRequest);
 
         return this.webClientChat
                 .post()
