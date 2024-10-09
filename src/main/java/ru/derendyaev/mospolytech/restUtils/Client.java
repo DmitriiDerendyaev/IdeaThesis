@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static ru.derendyaev.mospolytech.gigaChat.models.GigaChatConstant.*;
+
 @Service
 public class Client {
 
@@ -74,11 +76,11 @@ public class Client {
                 .uri("/api/v1/chat/completions")
                 .headers(httpHeaders -> httpHeaders.addAll(messageHeaders))
                 .bodyValue(new GigaMessageRequest(
-                        "GigaChat",
+                        GIGA_CHAT_MODEL,
                         false,
                         0,
-                        List.of(new Message("system", context),
-                                new Message("user", userRequest))
+                        List.of(new Message(SYSTEM_ROLE, context),
+                                new Message(USER_ROLE, userRequest))
                         ))
                 .retrieve()
                 .bodyToMono(GigaMessageResponse.class).block();
