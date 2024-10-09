@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.derendyaev.mospolytech.gigaChat.models.auth.GigaToken;
 import ru.derendyaev.mospolytech.gigaChat.models.message.GigaMessageResponse;
+import ru.derendyaev.mospolytech.gigaChat.role.roleImpl.SystemRolePrompt;
+import ru.derendyaev.mospolytech.gigaChat.role.roleImpl.UserRolePrompt;
 import ru.derendyaev.mospolytech.restUtils.Client;
 
 @SpringBootApplication
@@ -25,13 +27,10 @@ public class IdeaThesisApplication implements CommandLineRunner {
 		// Вызываем метод getToken() и распечатываем токен
 
 		GigaMessageResponse gigaMessageResponse = client.gigaMessageGenerate(
-				"я очень умный студент медик",
-				"расскажи про языки программирования в меде?", null);
+				new SystemRolePrompt().getRolePrompt(),
+				new UserRolePrompt("расшифрока анализов, Сбор анамнеза, физикальное обсдедование", "Эндокринология").getRolePrompt(), null);
 
 		System.out.println(gigaMessageResponse.toString());
-
-
-
 
 	}
 }
