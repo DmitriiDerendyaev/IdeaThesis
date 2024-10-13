@@ -12,18 +12,12 @@ import ru.derendyaev.mospolytech.restUtils.Client;
 @SpringBootApplication
 public class IdeaThesisApplication implements CommandLineRunner {
 
-	private final Client client;
-
-	public IdeaThesisApplication(Client client) {
-		this.client = client;
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(IdeaThesisApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) {
-		System.out.println("Приложентие запущено");
+		System.out.println("Приложение запущено");
 	}
 }
