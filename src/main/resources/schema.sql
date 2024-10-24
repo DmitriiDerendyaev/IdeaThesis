@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS competencies;
+DROP TABLE IF EXISTS user_competencies;
+DROP TABLE IF EXISTS study_areas;
+DROP TABLE IF EXISTS user_study_areas;
+DROP TABLE IF EXISTS user_requests;
+DROP TABLE IF EXISTS generates_topics;
+DROP TABLE IF EXISTS responses;
+DROP TABLE IF EXISTS user_requests;
+
 CREATE TABLE IF NOT EXISTS users
 (
     user_id     BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -5,7 +15,6 @@ CREATE TABLE IF NOT EXISTS users
     username    VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP    NOT NULL
 );
-
 
 CREATE TABLE IF NOT EXISTS competencies
 (
