@@ -51,21 +51,21 @@ public class EvokerBotService extends TelegramLongPollingBot {
             UserState userState = userStates.getOrDefault(chatId, new UserState());
 
             if (userMessage.equalsIgnoreCase("/start")) {
-                sendMessage(chatId, INTRO_MESSAGE);
+                sendMessage(chatId, INTRO_MESSAGE, false);
                 userState.setStage(DialogStage.ASK_COMPETENCIES);
-                sendMessage(chatId, "Введите через пробел набор компетенций, которыми вы обладаете. Пример: UI UX Верстка HTML CSS");
+                sendMessage(chatId, "Введите через пробел набор компетенций, которыми вы обладаете. Пример: UI UX Верстка HTML CSS", false);
                 userStates.put(chatId, userState);
             } else {
                 switch (userState.getStage()) {
                     case ASK_COMPETENCIES -> {
                         userState.setCompetencies(userMessage);
                         userState.setStage(DialogStage.ASK_AREA_OF_STUDY);
-                        sendMessage(chatId, ASK_COMPETENCIES_MESSAGE);
+                        sendMessage(chatId, ASK_COMPETENCIES_MESSAGE, false);
                     }
                     case ASK_AREA_OF_STUDY -> {
                         userState.setAreaOfStudy(userMessage);
                         userState.setStage(DialogStage.FINISH);
-                        sendMessage(chatId, "Спасибо! Обрабатываем данные...");
+                        sendMessage(chatId, "Спасибо! Обрабатываем данные...", false);
                         generateDiplomaTopics(chatId, userState);
                     }
                 }
@@ -79,13 +79,14 @@ public class EvokerBotService extends TelegramLongPollingBot {
                 new SystemRolePrompt().getRolePrompt(),
                 new UserRolePrompt(userState.getCompetencies(), userState.getAreaOfStudy()).getRolePrompt(), null);
 
-        sendMessage(chatId, "Рекомендованные темы для дипломной работы:\n" + gigaMessageResponse.toString());
+        sendMessage(chatId, "Рекомендованные темы для дипломной работы:\n" + gigaMessageResponse.toString(), true);
     }
 
-    public void sendMessage(Long chatId, String text) {
+    public void sendMessage(Long chatId, String text, boolean isMarkdown) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(text);
+        sendMessage.enableMarkdown(isMarkdown);
 
         try {
             execute(sendMessage);
