@@ -8,7 +8,6 @@ public class SystemRolePrompt extends RolePrompt {
         this.context = "Ты отвечаешь как эксперт в области образования и научной работы, с глубокими знаниями в современных технологиях.";
     }
 
-    @Override
     public String getRolePrompt() {
         return this.context;
     }
