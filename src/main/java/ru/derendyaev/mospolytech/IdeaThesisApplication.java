@@ -24,6 +24,6 @@ public class IdeaThesisApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		System.out.println("Приложентие запущено");
+		System.out.println("Приложение запущено");
 	}
 }

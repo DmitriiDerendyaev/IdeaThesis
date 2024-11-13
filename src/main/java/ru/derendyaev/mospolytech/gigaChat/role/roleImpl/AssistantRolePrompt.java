@@ -7,7 +7,6 @@ public class AssistantRolePrompt extends RolePrompt {
     public AssistantRolePrompt() {
     }
 
-    @Override
     public String getRolePrompt() {
         return null;
     }
